@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\controllers\RoleController;
 use App\Http\controllers\PermissionController;
 use App\Http\controllers\GroupController;
-use App\Http\controllers\UserController;
-
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,16 +16,9 @@ use App\Http\controllers\UserController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return view('welcome');
-});
-
-Route::get('roles',[RoleController::class,'index']);
-Route::get('role/{key_name}',[RoleController::class,'findRole']);
-Route::get('create-role',[RoleController::class, 'CreateRole']);
-Route::get('update-role/{id}',[RoleController::class, 'UpdateRole']);
-Route::get('update-role-k/{key_name}',[RoleController::class, 'UpdateRolebyKeyName']);
-Route::get('delete-role/{key_name}',[RoleController::class, 'DeleteRole']);
+})-> name('home');
 
 //permission
 
@@ -44,8 +36,17 @@ Route::get('Groups/{key_name}',[GroupController::class,'findgGoup']);
 // Roles pivot
 Route::get('role-pivot',[RoleController::class,'indexPivot']);
 
-/*Usuarios*/
-Route::get('usuarios',[UserController::class,'index']);
-Route::get('crear-usuario',[UserController::class,'create']);
-
 Route::get('login',[UserController::class,'login']);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('roles',[RoleController::class,'index']);
+    Route::get('role/{key_name}',[RoleController::class,'findRole']);
+    Route::get('create-role',[RoleController::class, 'CreateRole']);
+    Route::get('update-role/{id}',[RoleController::class, 'UpdateRole']);
+    Route::get('update-role-k/{key_name}',[RoleController::class, 'UpdateRolebyKeyName']);
+    Route::get('delete-role/{key_name}',[RoleController::class, 'DeleteRole']);
+    /*Usuarios*/
+    Route::get('usuarios',[UserController::class,'index']);
+    Route::get('crear-usuario',[UserController::class,'create']);
+});
+

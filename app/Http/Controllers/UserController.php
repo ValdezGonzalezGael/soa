@@ -1,16 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\User;
-use Hash;
 use Auth;
+use Hash;
 
 class UserController extends Controller
 {
+    //use Hash;
     public function index()
     {
-        if (Auth::class::user()->Role->key_name == 'algo'()){
+        $lista_permisos = Auth::user()->Role->permissions()->pluck('id')->toArray();
+        dd($lista_permisos);
+        // si en el array existe 1 en lista permisos
+        if (in_array(1, $lista_permisos)) {
+            dd('Si existe');
+        } else {
+            dd('No existe');
+        }
+        if (Auth::user()->Role->key_name == 'algo'()){
             $usuarios = User::with('Role.permissions')->get();
             foreach ($usuarios as $usuario) {
                 // dd($usuario->toArray());
@@ -34,7 +44,7 @@ class UserController extends Controller
             'age'=> "20",
             'telephone'=> "6188382822",
             'email'=> 'gael.valdez.is@unipolidgo.edu.mx',
-            'password'=> Hash::class::make('test1234'),
+            'password'=> Hash::make('test1234'),
             'role_id'=> 1,
         ]);
     }
@@ -43,8 +53,9 @@ class UserController extends Controller
             "email"    => 'gael.valdez.is@unipolidgo.edu.mx',
             'password' => 'test1234'
         ];
-        if(Auth::class::attempt($credentials)) {
+        if(Auth::attempt($credentials)) {
             return redirect()->intended('/');
         }
     }
+
 }
