@@ -9,7 +9,6 @@ use Hash;
 
 class UserController extends Controller
 {
-    //use Hash;
     public function index()
     {
         $lista_permisos = Auth::user()->Role->permissions()->pluck('id')->toArray();

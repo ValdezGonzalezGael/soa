@@ -18,11 +18,13 @@ class ProductController extends Controller
         $product = Product::where('key_name',$key_name)->first()->toJson();
         dd($product);
     }
-    public function CreateProduct()
+    public function CreateProduct(Request $request)
     {
         Product::Create ([
-            'name' => 'T.Docente',
-            'key_name' => 'tdocente'
+            'name' =>  $request->name,
+            'details' =>  $request->details,
+            'price' => $request->price,
+            'key_name' =>  $request->name
         ]);
     }
 
@@ -30,16 +32,16 @@ class ProductController extends Controller
     {
         $product= Product::find($id);
         $product->update ([
-            'name' => 'Tec.Docente',
-            'key_name' => 'tec_docente'
+            'name' => 'Skinny',
+            'key_name' => 'skinny'
         ]);
     }
     public function UpdateProductbyKeyName($key_name)
     {
         $product= Product::where('key_name',$key_name)->first();
         $product->update ([
-            'name' => 'Tec.docente',
-            'key_name' => 'tec_docente'
+            'name' => 'Skinny',
+            'key_name' => 'skinny'
         ]);
     }
 

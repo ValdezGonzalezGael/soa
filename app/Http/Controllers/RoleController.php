@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -32,11 +33,11 @@ class RoleController extends Controller
         $role = Role::where('key_name',$key_name)->first()->toJson();
         dd($role);
     }
-    public function CreateRole()
+    public function CreateRole(Request $request)
     {
         Role::Create ([
-            'name' => 'T.Docente',
-            'key_name' => 'tdocente'
+            'name' => $request->name,
+            'key_name' =>$request->name
         ]);
     }
 

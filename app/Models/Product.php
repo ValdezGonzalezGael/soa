@@ -14,8 +14,10 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'key_name',
+            'name',
+            'details',
+            'price',
+            'key_name'
     ];
     
     public function roles () {
